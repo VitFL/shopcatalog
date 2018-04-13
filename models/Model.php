@@ -33,8 +33,6 @@ class Model extends \yii\base\Model
                     $models[$i] = new $modelClass;
                 }
             }
-            echo "<hr>";
-         //   die;
         }
 
         unset($model, $formName, $post);

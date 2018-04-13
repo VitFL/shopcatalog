@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-
+use yii\helpers\ArrayHelper;
 use Yii;
 
 /**
@@ -9,6 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property string $shop_name
+ * @property string $shop_description
+ * @property string $shop_address
  *
  * @property BusinessHours[] $businessHours
  */
@@ -29,7 +31,8 @@ class Shop extends \yii\db\ActiveRecord
     {
         return [
             [['shop_name'], 'required'],
-            [['shop_name'], 'string', 'max' => 255],
+            [['shop_name','shop_description','shop_address'], 'string', 'max' => 255],
+            [['business_hours','date_picker'],'safe'],
         ];
     }
 
@@ -41,6 +44,8 @@ class Shop extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'shop_name' => 'Shop Name',
+            'shop_description' => 'Description',
+            'shop_address' => 'Address',
         ];
     }
 
@@ -49,6 +54,19 @@ class Shop extends \yii\db\ActiveRecord
      */
     public function getBusinessHours()
     {
-        return $this->hasMany(BusinessHours::className(), ['shop_id' => 'id']);
+        return $this->hasMany(BusinessHours::className(), ['shop_id' => 'id'])->orderBy(['weekday' => SORT_ASC]);
+    }
+
+
+    public function getBusinessHoursForWeek()
+    {
+        return ArrayHelper::map($this->businessHours, 'weekday', 'hoursRange');
+
+    }
+
+    public function getTodayWeekDay()
+    {
+        return date('w');
+
     }
 }

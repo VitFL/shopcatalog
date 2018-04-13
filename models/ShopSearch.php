@@ -12,6 +12,9 @@ use app\models\Shop;
  */
 class ShopSearch extends Shop
 {
+
+    public $date_picker;
+    public $time_picker;
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class ShopSearch extends Shop
     {
         return [
             [['id'], 'integer'],
-            [['shop_name'], 'safe'],
+            [['shop_name','date_picker','time_picker'], 'safe'],
         ];
     }
 
@@ -41,6 +44,7 @@ class ShopSearch extends Shop
      */
     public function search($params)
     {
+
         $query = Shop::find();
 
         // add conditions that should always apply here
@@ -48,8 +52,14 @@ class ShopSearch extends Shop
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        $dataProvider->pagination->pageSize=6;
 
         $this->load($params);
+
+        $dayofweek = date('N', strtotime($this->date_picker));
+
+        // join with related table `businessHours`
+        $query->joinWith('businessHours');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -57,12 +67,16 @@ class ShopSearch extends Shop
             return $dataProvider;
         }
 
+
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-        ]);
+        ])->andFilterWhere(['like', 'shop_name', $this->shop_name])
+            ->andFilterWhere(['=','business_hours.weekday',$dayofweek])
+            ->andFilterWhere(['<=', 'business_hours.start_hour', $this->time_picker])
+            ->andFilterWhere(['>=', 'business_hours.close_hour', $this->time_picker]);
 
-        $query->andFilterWhere(['like', 'shop_name', $this->shop_name]);
 
         return $dataProvider;
     }

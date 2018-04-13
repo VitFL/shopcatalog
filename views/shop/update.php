@@ -4,10 +4,12 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Shop */
+/* @var $modelShop \app\models\Shop */
+/* @var $modelsBusinessHours array */
 
 $this->title = 'Update Shop: '.$modelShop->shop_name;
 $this->params['breadcrumbs'][] = ['label' => 'Shops', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $modelShop->id, 'url' => ['view', 'id' => $modelShop->id]];
+$this->params['breadcrumbs'][] = ['label' => $modelShop->shop_name, 'url' => ['view', 'id' => $modelShop->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="shop-update">

@@ -39,11 +39,22 @@ class ShopController extends Controller
     public function actionIndex()
     {
         $searchModel = new ShopSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $queryParams = Yii::$app->request->post();
+        $dataProvider = $searchModel->search($queryParams);
+
+        $date_picker = isset($queryParams['ShopSearch']['date_picker']) ? $queryParams['ShopSearch']['date_picker'] : false;
+        $time_picker = isset($queryParams['ShopSearch']['time_picker']) ? $queryParams['ShopSearch']['time_picker'] : false;
+
+        $search_params = ($date_picker) ?
+            ['date'=>$date_picker, 'dayofweek'=>date('N', strtotime($date_picker))] :
+            ['date'=>false,'dayofweek'=>false];
+
+        $search_params['time']=($time_picker)?$time_picker:false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'search_params' => $search_params,
         ]);
     }
 
@@ -70,7 +81,7 @@ class ShopController extends Controller
     public function actionCreate()
     {
         $modelShop = new Shop;
-        $modelsBusinessHours = [new BusinessHours];
+        $modelsBusinessHours = [];
 
         if ($modelShop->load(Yii::$app->request->post())) {
 
@@ -104,9 +115,9 @@ class ShopController extends Controller
             }
         }
 
-        for ($i=1 ; $i<=6 ; $i++) {
+        for ($i=1 ; $i<=7 ; $i++) {
 
-            $modelsBusinessHours[] = new BusinessHours();
+            $modelsBusinessHours[$i] = new BusinessHours();
 
         }
 
@@ -169,9 +180,9 @@ class ShopController extends Controller
             }
         }
 
-        for ($i=0 ; $i<=6 ; $i++) {
+        for ($i=1 ; $i<=7 ; $i++) {
 
-         $newModelsBusinessHours[] = new BusinessHours();
+         $newModelsBusinessHours[$i] = new BusinessHours();
 
         }
 

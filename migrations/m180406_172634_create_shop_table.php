@@ -15,6 +15,8 @@ class m180406_172634_create_shop_table extends Migration
         $this->createTable('shop', [
             'id' => $this->primaryKey(),
             'shop_name' => $this->string()->notNull(),
+            'shop_description' => $this->string()->notNull(),
+            'shop_address' => $this->string()->notNull(),
         ]);
     }
 

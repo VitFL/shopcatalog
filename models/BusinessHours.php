@@ -60,4 +60,14 @@ class BusinessHours extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Shop::className(), ['id' => 'shop_id']);
     }
+
+    /**
+     * @return string
+     */
+    public function getHoursRange()
+    {
+        $start_hour = date('H:i', strtotime($this->start_hour));
+        $close_hour = date('H:i', strtotime($this->close_hour));
+        return $start_hour."-".$close_hour;
+    }
 }
