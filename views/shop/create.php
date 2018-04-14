@@ -10,7 +10,7 @@ use yii\helpers\Html;
 /* @var $modelsBusinessHours array */
 
 $this->title = 'Create Shop';
-$this->params['breadcrumbs'][] = ['label' => 'Shops', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Manage Shops', 'url' => ['manage']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Shop */
 
 $this->title = $model->shop_name;
-$this->params['breadcrumbs'][] = ['label' => 'Shops', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Manage Shops', 'url' => ['manage']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="shop-view">
@@ -24,25 +24,34 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <div class="container" style="background: #F7F7F7;width: 550px; margin: 0 ">
-        <p></p>
-        <p align="justify">Address: <?=Html::a($model->shop_address,"https://www.google.com/maps/search/".urlencode($model->shop_address))?></p>
-
-        <p align="justify"><?=$model->shop_description?></p>
-        <?php for ($i=1;$i<=7;$i++) : ?>
-        <div class="row">
-            <div class="col-sm-2">
-                <span><?=jddayofweek($i-1,1).":"?> </span>
-            </div>
-            <div class="col-sm-3">
-                <span><?=isset($model->getBusinessHoursForWeek()[$i])?$model->getBusinessHoursForWeek()[$i]:"Closed";?> </span>
-            </div>
-
-
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Shop information</h3>
         </div>
-        <?php endfor;?>
+        <div class="panel-body">
 
+            <p align="justify">Address: <?=Html::a($model->shop_address,"https://www.google.com/maps/search/".urlencode($model->shop_address))?></p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p align="justify"><?=$model->shop_description?></p>
+                </div>
+            </div>
+
+            <?php for ($i=1;$i<=7;$i++) : ?>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <span><?=jddayofweek($i-1,1).":"?> </span>
+                    </div>
+                    <div class="col-sm-3">
+                        <span><?=isset($model->getBusinessHoursForWeek()[$i])?$model->getBusinessHoursForWeek()[$i]:"Closed";?> </span>
+                    </div>
+
+
+                </div>
+            <?php endfor;?>
+        </div>
     </div>
+
 
 
 </div>

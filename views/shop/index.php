@@ -25,7 +25,7 @@ $this->title = 'Shops Catalog';
 
 </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <?php $form = ActiveForm::begin(['method' => 'post']); ?>
 
         <div class="row justify-content-center">
@@ -76,15 +76,17 @@ $this->title = 'Shops Catalog';
         </div>
 
 
+
+
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' => function ($model, $key, $index, $widget) use ($search_params) {
                 return $this->render('_list_item',['model' => $model,'search_params'=>$search_params]);
  },
             'itemOptions' => ['tag' => false],
-            'layout' => "<div>{summary}</div>\n<div class=\"row justify-content-center\">{items}</div>\n<div>{pager}</div>",
+            'layout' => "<div>{summary}</div>\n<div class=\"row\">{items}</div>\n<div>{pager}</div>",
             'summary' => "Found {totalCount} shops for you ".
-                (($search_params['date'])?"that are open ".$search_params['date']:"").
+                (($search_params['date'])?"that are open ".$search_params['date']:"that are open Today").
                 (($search_params['time'])?" at ".$search_params['time']:""),
             'summaryOptions' => [
                 'tag' => 'span',

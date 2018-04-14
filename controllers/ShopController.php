@@ -33,7 +33,24 @@ class ShopController extends Controller
     }
 
     /**
-     * Lists all Shop models.
+     * Lists all Shop models in GridView
+     * Only for site admin
+     * @return mixed
+     */
+    public function actionManage()
+    {
+        $searchModel = new ShopSearch();
+        $queryParams = Yii::$app->request->post();
+        $dataProvider = $searchModel->search($queryParams);
+
+        return $this->render('manage', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists Shop models in ListView
      * @return mixed
      */
     public function actionIndex()

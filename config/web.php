@@ -6,6 +6,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+
     'id' => 'basic',
     'name'=>'Shops Catalog',
     'basePath' => dirname(__DIR__),
@@ -15,6 +16,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'defaultRoute' => 'shop/index',
+
     'components' => [
 
         'urlManager' => [
@@ -63,6 +65,9 @@ $config = [
         ],
         'db' => $db,
 
+    ],
+    'modules' => [
+        'gridview' => ['class' => 'kartik\grid\Module']
     ],
     'params' => $params,
 ];

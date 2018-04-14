@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $modelsBusinessHours array */
 
 $this->title = 'Update Shop: '.$modelShop->shop_name;
-$this->params['breadcrumbs'][] = ['label' => 'Shops', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Manage Shops', 'url' => ['manage']];
 $this->params['breadcrumbs'][] = ['label' => $modelShop->shop_name, 'url' => ['view', 'id' => $modelShop->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

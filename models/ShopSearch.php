@@ -56,8 +56,14 @@ class ShopSearch extends Shop
 
         $this->load($params);
 
-        $dayofweek = date('N', strtotime($this->date_picker));
-
+        if (isset($this->date_picker)&&!empty($this->date_picker)) {
+            $dayofweek = date('N', strtotime($this->date_picker));
+        }
+        else
+        {
+            //Today
+            $dayofweek = date('N');
+        }
         // join with related table `businessHours`
         $query->joinWith('businessHours');
 
