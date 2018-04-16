@@ -18,7 +18,9 @@ $config = [
     'defaultRoute' => 'shop/index',
 
     'components' => [
-
+        'user' => [
+            'class' => 'amnah\yii2\user\components\User',
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             // Disable index.php
@@ -39,10 +41,6 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
-        ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -67,6 +65,10 @@ $config = [
 
     ],
     'modules' => [
+        'user' => [
+            'class' => 'amnah\yii2\user\Module',
+            // set custom module properties here ...
+        ],
         'gridview' => ['class' => 'kartik\grid\Module']
     ],
     'params' => $params,

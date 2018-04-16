@@ -6,23 +6,32 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Shop */
 
 $this->title = $model->shop_name;
-$this->params['breadcrumbs'][] = ['label' => 'Manage Shops', 'url' => ['manage']];
+if (Yii::$app->user->can("admin")) {
+    $this->params['breadcrumbs'][] = ['label' => 'Manage Shops', 'url' => ['manage']];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="shop-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+    <?php if(Yii::$app->user->can("admin")) {
+
+
+        echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+        echo Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]);
+
+    }
+
+    ?>
     </p>
+
 
     <div class="panel panel-default">
         <div class="panel-heading">

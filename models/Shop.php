@@ -57,6 +57,11 @@ class Shop extends \yii\db\ActiveRecord
         return $this->hasMany(BusinessHours::className(), ['shop_id' => 'id'])->orderBy(['weekday' => SORT_ASC]);
     }
 
+    public function getBusinessHoursCount()
+    {
+        return $this->businessHours->count();
+    }
+
 
     public function getBusinessHoursForWeek()
     {
@@ -66,7 +71,7 @@ class Shop extends \yii\db\ActiveRecord
 
     public function getTodayWeekDay()
     {
-        return date('w');
+        return date('N');
 
     }
 }

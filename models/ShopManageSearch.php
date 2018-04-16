@@ -8,13 +8,12 @@ use yii\data\ActiveDataProvider;
 use app\models\Shop;
 
 /**
- * ShopSearch represents the model behind the search form of `app\models\Shop`.
+ * ShopManageSearch represents the model behind the search form of `app\models\Shop`.
  */
-class ShopSearch extends Shop
+class ShopManageSearch extends Shop
 {
 
-    public $date_picker;
-    public $time_picker;
+    public $working_days;
     /**
      * @inheritdoc
      */
@@ -22,7 +21,7 @@ class ShopSearch extends Shop
     {
         return [
             [['id'], 'integer'],
-            [['shop_name','date_picker','time_picker'], 'safe'],
+            [['shop_name', 'shop_description', 'shop_address'], 'string'],
         ];
     }
 
@@ -48,25 +47,15 @@ class ShopSearch extends Shop
 
         $query = Shop::find();
 
+        $subQuery = BusinessHours::find()
+            ->select('shop_id, count(weekday) as business_hours_count')
+            ->groupBy('shop_id');
+        $query->leftJoin(['business_hours_count' => $subQuery], 'business_hours_count.shop_id = id');
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        $dataProvider->pagination->pageSize=20;
-
-
-
-        // join with related table `businessHours`
-        $query->joinWith('businessHours');
-
-        if (isset($this->date_picker)&&!empty($this->date_picker)) {
-            $dayofweek = date('N', strtotime($this->date_picker));
-        }
-        else
-        {
-            //Today
-            $dayofweek = date('N');
-        }
 
 
         if (!$this->validate()) {
@@ -76,13 +65,28 @@ class ShopSearch extends Shop
         }
 
 
+
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'shop_name',
+                'shop_description',
+                'shop_address',
+                'working_days' => [
+                    'asc' => ['business_hours_count' =>SORT_ASC ],
+                    'desc' => ['business_hours_count' => SORT_DESC],
+                    'default' => SORT_ASC
+                ],
+            ]
+        ]);
+
+
         //  filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
         ])->andFilterWhere(['like', 'shop_name', $this->shop_name])
-            ->andFilterWhere(['=','business_hours.weekday',$dayofweek])
-            ->andFilterWhere(['<=', 'business_hours.start_hour', $this->time_picker])
-            ->andFilterWhere(['>=', 'business_hours.close_hour', $this->time_picker]);
+          ->andFilterWhere(['like', 'shop_description', $this->shop_description])
+          ->andFilterWhere(['like', 'shop_address', $this->shop_address]);
 
 
         return $dataProvider;

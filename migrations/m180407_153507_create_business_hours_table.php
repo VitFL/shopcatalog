@@ -39,6 +39,28 @@ class m180407_153507_create_business_hours_table extends Migration
             'id',
             'CASCADE'
         );
+
+
+        // creates index for column `weekday`, to improve the query performance.
+        $this->createIndex(
+            'idx-business_hours-weekday',
+            'business_hours',
+            'weekday'
+        );
+
+        // creates index for column `start_hour`, to improve the query performance.
+        $this->createIndex(
+            'idx-business_hours-start_hour',
+            'business_hours',
+            'start_hour'
+        );
+
+        // creates index for column `close_hour`, to improve the query performance.
+        $this->createIndex(
+            'idx-business_hours-close_hour',
+            'business_hours',
+            'close_hour'
+        );
     }
 
     /**

@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Shop;
 use app\models\ShopSearch;
+use app\models\ShopManageSearch;
 use app\models\BusinessHours;
 use app\models\Model;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
@@ -39,7 +41,10 @@ class ShopController extends Controller
      */
     public function actionManage()
     {
-        $searchModel = new ShopSearch();
+        if (!Yii::$app->user->can("admin")) {
+                throw new HttpException(403, 'You are not allowed to perform this action.');
+        }
+        $searchModel = new ShopManageSearch();
         $queryParams = Yii::$app->request->post();
         $dataProvider = $searchModel->search($queryParams);
 
@@ -97,6 +102,10 @@ class ShopController extends Controller
 
     public function actionCreate()
     {
+
+        if (!Yii::$app->user->can("admin")) {
+            throw new HttpException(403, 'You are not allowed to perform this action.');
+        }
         $modelShop = new Shop;
         $modelsBusinessHours = [];
 
@@ -155,6 +164,10 @@ class ShopController extends Controller
      */
     public function actionUpdate($id)
     {
+
+        if (!Yii::$app->user->can("admin")) {
+            throw new HttpException(403, 'You are not allowed to perform this action.');
+        }
         $modelShop = $this->findModel($id);
         $modelsBusinessHours = $modelShop->businessHours;
 
@@ -224,6 +237,10 @@ class ShopController extends Controller
      */
     public function actionDelete($id)
     {
+
+        if (!Yii::$app->user->can("admin")) {
+            throw new HttpException(403, 'You are not allowed to perform this action.');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

@@ -13,10 +13,11 @@ use yii\helpers\HtmlPurifier;
     </div>
 
     <div class="row">
-        <div class="col-xs-4">
+        <div class="col-sm-4">
             <?=$model->businessHoursForWeek[($search_params['dayofweek'])?$search_params['dayofweek']:$model->todayWeekDay]?>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-md-12">
@@ -24,8 +25,14 @@ use yii\helpers\HtmlPurifier;
         </div>
 
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p align="justify"><?=$model->shop_address; ?></p>
+        </div>
 
-<div class="row">
+    </div>
+
+    <div class="row">
     <div class="col-sm-4"><?= Html::a(Yii::t('app', 'more info...'), ['view', 'id' =>$model->id], ['class' => 'btn btn-default']) ?></div>
 
 </div>

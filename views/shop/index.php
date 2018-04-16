@@ -85,7 +85,7 @@ $this->title = 'Shops Catalog';
  },
             'itemOptions' => ['tag' => false],
             'layout' => "<div>{summary}</div>\n<div class=\"row\">{items}</div>\n<div>{pager}</div>",
-            'summary' => "Found {totalCount} shops for you ".
+            'summary' => "Showing {totalCount} shops ".
                 (($search_params['date'])?"that are open ".$search_params['date']:"that are open Today").
                 (($search_params['time'])?" at ".$search_params['time']:""),
             'summaryOptions' => [
