@@ -12,8 +12,6 @@ use app\models\Shop;
  */
 class ShopManageSearch extends Shop
 {
-
-    public $working_days;
     /**
      * @inheritdoc
      */
@@ -72,7 +70,7 @@ class ShopManageSearch extends Shop
                 'shop_name',
                 'shop_description',
                 'shop_address',
-                'working_days' => [
+                'business_hours' => [
                     'asc' => ['business_hours_count' =>SORT_ASC ],
                     'desc' => ['business_hours_count' => SORT_DESC],
                     'default' => SORT_ASC

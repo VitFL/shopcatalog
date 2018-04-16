@@ -8,7 +8,6 @@
 use app\models\Shop;
 use kartik\helpers\Html;
 use kartik\grid\GridView;
-use dosamigos\multiselect\MultiSelect;
 
 $this->title = 'Shops Catalog';
 ?>
@@ -34,8 +33,8 @@ $this->title = 'Shops Catalog';
         'shop_description',
         'shop_address',
         [
-                'attribute' => 'working_days',
-            'label' => 'Working Days',
+                'attribute' => 'business_hours',
+            'label' => 'Business Hours',
             'format' => 'raw',
             'contentOptions'=>['style'=>'width: 200px;'],
             'value' => function ($model) {
