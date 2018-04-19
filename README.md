@@ -7,7 +7,7 @@ After cloning this repository, go to project root dir, and update dependencies w
 <code>php composer update</code>
 
 <h5>Database</h5>
-<p>Edit the file config/db.php with real data, for example:</p>
+<p>Create a database and edit the file config/db.php with real data, for example:</p>
 <pre>
 return [
           'class' => 'yii\db\Connection',
